@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_2_cards/models/app_bloc.dart';
+import 'package:projeto_2_cards/routes/routes.dart';
 import 'package:projeto_2_cards/services/authentication_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -7,8 +9,19 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+@override
+void initState() {
+  // TODO: implement initState
+  if (AppBloc.user != null) {
+    BuildContext context;
+        Navigator.pushNamed(context, Routes.CARDS_PAGE);
+  }
+}
+
 class _LoginPageState extends State<LoginPage> {
   bool isEnabled = false;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   AuthenticationService authenticationService = AuthenticationService();
 
   @override
@@ -61,6 +74,8 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 30),
                   TextFormField(
                     style: TextStyle(color: Colors.white),
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       suffix: Icon(Icons.mail, color: Colors.black38),
                       filled: true,
@@ -88,6 +103,8 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 20),
                   TextFormField(
                     style: TextStyle(color: Colors.white),
+                    controller: _passwordController,
+                    obscureText: true,
                     decoration: InputDecoration(
                       suffix: Icon(Icons.remove_red_eye_rounded,
                           color: Colors.black38),
@@ -160,7 +177,13 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     onPressed: () async {
-                      authenticationService.login();
+                      await authenticationService.login(
+                          _emailController.text, _passwordController.text);
+                      print(AppBloc.user);
+                      if (AppBloc.user != null) {
+                        Navigator.pushNamed(context, Routes.CARDS_PAGE);
+                      }
+                      print('salvou usuario');
                     },
                   ),
                   SizedBox(height: 30),

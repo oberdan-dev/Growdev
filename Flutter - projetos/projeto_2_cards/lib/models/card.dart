@@ -1,11 +1,11 @@
-class Card {
+class Cartao {
   int id;
   String content;
   String title;
 
-  Card(this.id, this.content, this.title);
+  Cartao({this.id, this.content, this.title});
 
-  Card.fromJson(Map<String, dynamic> json)
+  Cartao.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         content = json['content'],
         title = json['title'];

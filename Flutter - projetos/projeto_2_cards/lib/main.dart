@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_2_cards/models/app_bloc.dart';
 import 'package:projeto_2_cards/pages/cards_page.dart';
+import 'package:projeto_2_cards/pages/create_card_page.dart';
 import 'package:projeto_2_cards/pages/login_page.dart';
 import 'package:projeto_2_cards/routes/routes.dart';
 
@@ -17,10 +19,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: Routes.CARDS_PAGE,
+      initialRoute: AppBloc.user == null ? Routes.LOGIN : Routes.CARDS_PAGE,
       routes: {
         Routes.LOGIN: (context) => LoginPage(),
         Routes.CARDS_PAGE: (context) => CardsPage(),
+        Routes.CREATE_CARD_PAGE: (context) => CreateCardPage(),
       },
     );
   }
