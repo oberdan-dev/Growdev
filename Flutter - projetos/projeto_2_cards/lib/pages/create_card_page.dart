@@ -66,54 +66,10 @@ class _CreateCardPageState extends State<CreateCardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              padding: EdgeInsets.only(left: 15.0, top: 15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    maxRadius: 30,
-                    backgroundColor: Color.fromRGBO(43, 56, 91, .4),
-                    child: Icon(
-                      Icons.perm_identity,
-                      size: 60,
-                      color: Colors.orangeAccent,
-                    ),
-                  ),
-                  Text(
-                    AppBloc.user.email,
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                  Text(
-                    AppBloc.user.name,
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(43, 56, 91, 1),
-              ),
-            ),
-            ListTile(
-              title: Text('Sair'),
-              onTap: () {
-                AppBloc.user = null;
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    (Route<dynamic> route) => false);
-              },
-            ),
-          ],
-        ),
-      ),
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('CREATE CARD'),
+        title: Text('Card: ${card.title ?? "Novo"}'),
+        backgroundColor: Color.fromRGBO(43, 56, 91, 1),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(
@@ -132,7 +88,10 @@ class _CreateCardPageState extends State<CreateCardPage> {
                     children: [
                       TextFormField(
                         initialValue: card?.title,
-                        decoration: InputDecoration(hintText: 'Body'),
+                        decoration: InputDecoration(
+                          hintText: 'Título',
+                          enabledBorder: OutlineInputBorder(),
+                        ),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'This field is required';
@@ -150,7 +109,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         initialValue: card?.content != null
                             ? card?.content.toString()
                             : '',
-                        decoration: InputDecoration(hintText: 'Content'),
+                        decoration: InputDecoration(hintText: 'Content', enabledBorder: OutlineInputBorder()),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'This field is required';

@@ -54,4 +54,19 @@ class CardsService {
         ? Cartao.fromJson(response.data)
         : throw Error();
   }
+
+  Future<bool> delete(Cartao card) async {
+    Response response = await dio.delete(
+      '/cards/${card.id}',
+      options: Options(
+        headers: {'Authorization': 'Bearer ${AppBloc.user.token}'},
+      ),
+    );
+
+    print(response);
+    print(response.statusCode);
+    print(response.data);
+
+    return response.statusCode == 200 ? true : throw Error();
+  }
 }

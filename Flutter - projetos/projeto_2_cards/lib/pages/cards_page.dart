@@ -73,6 +73,7 @@ class _CardsPageState extends State<CardsPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text('Cards'),
+          backgroundColor: Color.fromRGBO(43, 56, 91, 1),
           actions: [
             GestureDetector(
               child: Icon(Icons.add),
@@ -127,6 +128,14 @@ class _CardsPageState extends State<CardsPage> {
                       if (cardUpdated != null) {
                         setState(() {
                           card = cardUpdated;
+                        });
+                      }
+                    },
+                    onLongPress: () async {
+                      var deleted = await cardsService.delete(card);
+                      if (deleted) {
+                        setState(() {
+                          cards.remove(card);
                         });
                       }
                     },
