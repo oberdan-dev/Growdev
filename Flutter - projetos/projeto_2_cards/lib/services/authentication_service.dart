@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:projeto_2_cards/models/app_bloc.dart';
 import 'package:projeto_2_cards/models/user.dart';
@@ -11,7 +9,7 @@ class AuthenticationService {
           BaseOptions(baseUrl: 'https://api-cards-growdev.herokuapp.com'),
         );
 
-  Future<User> login(email, password) async {
+  Future<void> login(email, password) async {
     try {
       Response response = await dio
           .post("/login", data: {'email': email, 'password': password});
@@ -24,8 +22,8 @@ class AuthenticationService {
       return e;
     }
 
-    void register() async {
-      print('register');
-    }
+    // void register() async {
+    //   print('register');
+    // }
   }
 }

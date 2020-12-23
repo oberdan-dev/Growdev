@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_2_cards/models/app_bloc.dart';
 import 'package:projeto_2_cards/models/card.dart';
-import 'package:projeto_2_cards/pages/login_page.dart';
 import 'package:projeto_2_cards/services/cards_service.dart';
 
 class CreateCardPage extends StatefulWidget {
@@ -17,7 +15,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     card = (ModalRoute.of(context).settings?.arguments as Cartao) ?? Cartao();
   }
@@ -109,7 +106,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         initialValue: card?.content != null
                             ? card?.content.toString()
                             : '',
-                        decoration: InputDecoration(hintText: 'Content', enabledBorder: OutlineInputBorder()),
+                        decoration: InputDecoration(
+                            hintText: 'Content',
+                            enabledBorder: OutlineInputBorder()),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'This field is required';

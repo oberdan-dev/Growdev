@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:projeto_2_cards/models/app_bloc.dart';
 import 'package:projeto_2_cards/models/card.dart';
@@ -17,7 +19,7 @@ class _CardsPageState extends State<CardsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     getCards = cardsService.buscarTodosCards();
   }
 
@@ -116,30 +118,75 @@ class _CardsPageState extends State<CardsPage> {
                 itemCount: cards.length,
                 itemBuilder: (context, index) {
                   var card = cards[index];
-                  return ListTile(
-                    leading: Icon(Icons.supervised_user_circle),
-                    title: Text(card.title ?? ''),
-                    onTap: () async {
-                      var cardUpdated = await Navigator.of(context).pushNamed(
-                        Routes.CREATE_CARD_PAGE,
-                        arguments: card,
-                      );
-
-                      if (cardUpdated != null) {
-                        setState(() {
-                          card = cardUpdated;
-                        });
-                      }
-                    },
-                    onLongPress: () async {
-                      var deleted = await cardsService.delete(card);
-                      if (deleted) {
-                        setState(() {
-                          cards.remove(card);
-                        });
-                      }
-                    },
+                  return Center(
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(55.5),
+                          side: BorderSide(color: Colors.red)),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Theme.of(context).accentColor),
+                                  child: Text('1'),
+                                ),
+                                Flexible(
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 10.0),
+                                    child: Text(
+                                      card.title ?? '',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 16),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(
+                            thickness: 1,
+                            color: Colors.black,
+                            endIndent: 10,
+                            indent: 10,
+                          )
+                        ],
+                      ),
+                    ),
                   );
+                  // return Card(
+                  //   color: Colors.white,
+                  // );
+
+                  //           return ListTile(
+                  //             leading: Icon(Icons.supervised_user_circle),
+                  //             title: Text(card.title ?? ''),
+                  //             onTap: () async {
+                  //               var cardUpdated = await Navigator.of(context).pushNamed(
+                  //                 Routes.CREATE_CARD_PAGE,
+                  //                 arguments: card,
+                  //               );
+
+                  //               if (cardUpdated != null) {
+                  //                 setState(() {
+                  //                   card = cardUpdated;
+                  //                 });
+                  //               }
+                  //             },
+                  //             onLongPress: () async {
+                  //               var deleted = await cardsService.delete(card);
+                  //               if (deleted) {
+                  //                 setState(() {
+                  //                   cards.remove(card);
+                  //                 });
+                  //               }
+                  //             },
+                  //           );
                 },
               );
             },
